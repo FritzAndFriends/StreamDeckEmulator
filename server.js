@@ -1,5 +1,6 @@
 const config = require('./config');
-var manifest = require(config.executable.path +'\\'+ config.executable.manifest);
+const path = require('path');
+let manifest = require(path.join(config.executable.path, config.executable.manifest));
 
 const WebSocket = require('ws');
 const server = new WebSocket.Server({ port: config.server.port});
