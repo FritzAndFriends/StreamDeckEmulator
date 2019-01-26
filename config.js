@@ -8,7 +8,8 @@ config.executable = {
 config.server = {
     deviceId : "55F16B35884A859CCE4FFA1FC8D3DE5B",
     port : 3000,
-    platform : "osx"
+    winplatform: "windows",
+    osxplatform : "osx"
 }
 
 module.exports = config;

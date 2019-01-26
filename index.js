@@ -15,7 +15,7 @@ forked.send('<status>Web Socket Server Started....');
 let info = {
     'application': {
       'language': 'en', 
-      'platform': config.server.platform, 
+      'platform': os.platform == 'win32' ? config.server.winplatform : config.server.osxplatform,
       'version': '4.0.0'
     }, 
     'devices': [
