@@ -3,7 +3,10 @@ const { fork } = require('child_process');
 const colors = require('colors');
 const rlSync = require('readline-sync');
 const exec = require('child_process').execFile;
-const manifest = require(config.executable.path +'\\'+ config.executable.manifest);
+const path = require('path');
+const os = require('os');
+let manifest = require(path.join(config.executable.path, config.executable.manifest));
+const pluginExe = os.platform == 'win32' ? config.executable.winexe : config.executable.osxexe;
 
 const forked = fork('server.js');
 console.log('<status>Web Socket Server Started....'.green);
@@ -11,10 +14,10 @@ console.log('<status>Web Socket Server Started....'.green);
 console.log('Green Text denotes hardware action\nGreen Highlight denotes hardware messages sent\nCyan highlight denotes messages received from plugin\n');
 
 // Registration Stuff
-var info = {
+let info = {
     'application': {
       'language': 'en', 
-      'platform': 'windows', 
+      'platform': os.platform == 'win32' ? config.server.winplatform : config.server.osxplatform,
       'version': '4.0.0'
     }, 
     'devices': [
@@ -29,8 +32,8 @@ var info = {
     ]
   };
 
-var registrationParams = ['-port', config.server.port, '-pluginUUID', manifest.Actions[0].UUID,'-registerEvent','registerEvent','-info', JSON.stringify(info)];
-exec(config.executable.exe, registrationParams, { cwd: config.executable.path }, (err, data) => {
+let registrationParams = ['-port', config.server.port, '-pluginUUID', manifest.Actions[0].UUID,'-registerEvent','registerEvent','-info', JSON.stringify(info)];
+exec(pluginExe, registrationParams, { cwd: config.executable.path }, (err, data) => {
     if(err){
         console.log(`ERROR: ${err}`.red);
     } else {
