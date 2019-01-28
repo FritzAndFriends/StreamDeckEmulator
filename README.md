@@ -1,6 +1,6 @@
 # StreamDeckEmulator
 
-A simple emulator for the Stream Deck Application to allow plugin developers to develop, test, and debug their plugins without requiring a physical [Stream Deck][https://www.elgato.com/en/gaming/stream-deck] device.
+A simple emulator for the Stream Deck Application to allow plugin developers to develop, test, and debug their plugins without requiring a physical [Stream Deck][https://www.elgato.com/en/gaming/stream-deckgit] device.
 
 
 ### Pre-requisites
