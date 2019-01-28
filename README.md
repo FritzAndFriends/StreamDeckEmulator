@@ -1,11 +1,11 @@
 # StreamDeckEmulator
 
-A simple emulator for the Stream Deck Application to allow plugin developers to develop, test, and debug their plugins without requiring a physical [Stream Deck](https://www.elgato.com/en/gaming/stream-deckgit) device.
+A simple emulator for the Stream Deck Application to allow plugin developers to develop, test, and debug their plugins without requiring a physical [Stream Deck][] device.
 
 
 ### Pre-requisites
 
-In order to be able to run this emulator, you will need to have [Node.js](https://nodejs.org/) installed. The most recent <abbr title="Long Term Service">LTS</abbr> is suggested.
+In order to be able to run this emulator, you will need to have [Node.js][] installed. The most recent <abbr title="Long Term Service">LTS</abbr> is suggested.
 
 ### Getting Started
 
