@@ -1,11 +1,11 @@
 # StreamDeckEmulator
 
-A simple emulator for the Stream Deck Application to allow plugin developers to develop, test, and debug their plugins without requiring a physical [Stream Deck][https://www.elgato.com/en/gaming/stream-deckgit] device.
+A simple emulator for the Stream Deck Application to allow plugin developers to develop, test, and debug their plugins without requiring a physical [Stream Deck](https://www.elgato.com/en/gaming/stream-deckgit) device.
 
 
 ### Pre-requisites
 
-In order to be able to run this emulator, you will need to have [Node.js][https://nodejs.org/] installed. The most recent <abbr title="Long Term Service">LTS</abbr> is suggested.
+In order to be able to run this emulator, you will need to have [Node.js](https://nodejs.org/) installed. The most recent <abbr title="Long Term Service">LTS</abbr> is suggested.
 
 ### Getting Started
 
@@ -14,8 +14,8 @@ In order to be able to run this emulator, you will need to have [Node.js][https:
 3. Run `npm install`.
 4. Create a copy of the .env_sample file: `cp .env_sample .env`.
 5. Update `.env` file to set your environment specific values.
-   1. Update the value of `BUILD_PATH` to be the build output path of your plugin's executable
-   2. Update the value of `config.executable.exe` to be the filename of the your plugin's executable
+   1. Update the value of `BUILD_PATH` to be the build output path of your plugin's executable.
+   2. Update the value of `WINEXE_NAME` or `OSXEXE_NAME` to be the filename of the your plugin's executable.
 6. Run `npm start` to launch the emulator.
 
 
