@@ -1,6 +1,6 @@
+var Chalk = require('chalk');
 const config = require('./config');
 const { fork } = require('child_process');
-const colors = require('colors');
 const rlSync = require('readline-sync');
 const exec = require('child_process').execFile;
 const path = require('path');
@@ -9,7 +9,7 @@ let manifest = require(path.join(config.executable.path, config.executable.manif
 const pluginExe = os.platform == 'win32' ? config.executable.winexe : config.executable.osxexe;
 
 const forked = fork('server.js');
-console.log('<status>Web Socket Server Started....'.green);
+console.log(Chalk.green('<status>Web Socket Server Started....'));
 
 console.log('Green Text denotes hardware action\nGreen Highlight denotes hardware messages sent\nCyan highlight denotes messages received from plugin\n');
 
@@ -35,9 +35,9 @@ let info = {
 let registrationParams = ['-port', config.server.port, '-pluginUUID', manifest.Actions[0].UUID,'-registerEvent','registerEvent','-info', JSON.stringify(info)];
 exec(pluginExe, registrationParams, { cwd: config.executable.path }, (err, data) => {
     if(err){
-        console.log(`ERROR: ${err}`.red);
+        console.log(Chalk.red(`ERROR: ${err}`));
     } else {
-        console.log(`DATA: ${data}`.green);
+        console.log(Chalk.green(`DATA: ${data}`));
     }
 } );
 

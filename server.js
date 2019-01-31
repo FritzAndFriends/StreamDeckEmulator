@@ -1,5 +1,5 @@
+var Chalk = require('chalk');
 const config = require('./config');
-const colors = require('colors');
 const path = require('path');
 let manifest = require(path.join(config.executable.path, config.executable.manifest));
 
@@ -15,19 +15,19 @@ server.on('connection', (socket) => {
         console.log(msg.bgCyan.black);
         switch(evt.event) {
             case 'showOk':
-                console.log('*******OK ICON IS SHOWN\n'.green);
+                console.log(Chalk.green('*******OK ICON IS SHOWN\n'));
                 break;
             case 'showAlert':
-                console.log('*******ALERT ICON IS DISPLAYED\n'.green);
+                console.log(Chalk.green('*******ALERT ICON IS DISPLAYED\n'));
                 break;
             case 'registerEvent':
-                console.log(`********PLUGIN REGISTERED: uuid=${evt.uuid}\n`.green);
+                console.log(Chalk.green(`********PLUGIN REGISTERED: uuid=${evt.uuid}\n`));
                 break;
             case 'openUrl':
-                console.log(`********OPENING URL ${evt.payload.url}\n`.green)
+                console.log(Chalk.green(`********OPENING URL ${evt.payload.url}\n`));
                 break;
             case 'setTitle':
-                console.log(`********TITLE SET: title: ${evt.payload.title} - Sending titleParametersDidChange event to plugin\n`.green)
+                console.log(Chalk.green(`********TITLE SET: title: ${evt.payload.title} - Sending titleParametersDidChange event to plugin\n`.green));
                 var json = {
                     'action': manifest.Actions[0].UUID, 
                     'event': 'titleParametersDidChange', 
@@ -52,15 +52,15 @@ server.on('connection', (socket) => {
                       }
                     }
                 };
-                console.log(JSON.stringify(json).bgGreen.black);
+                console.log(Chalk.black.bgGreen(JSON.stringify(json)));
                 _socket.send(JSON.stringify(json));
                 break;
             case 'setSettings':
-                console.log(`********SETTINGS STORED: ${JSON.stringify(evt.payload)} *******\n`.green);
+                console.log(Chalk.green(`********SETTINGS STORED: ${JSON.stringify(evt.payload)} *******\n`));
                 _settings = evt.payload;
                 break;
             default: 
-                console.log(`********UNKNOWN MESSAGE ${msg}\n`.red);
+                console.log(Chalk.red(`********UNKNOWN MESSAGE ${msg}\n`));
                 break;
         }
     });
@@ -87,22 +87,22 @@ process.on('message', (msg) => {
     switch(msg) {
         case 'keyDown':
             json.event = 'keyDown';
-            console.log(JSON.stringify(json).bgGreen.black);
+            console.log(Chalk.black.bgGreen(JSON.stringify(json)));
             _socket.send(JSON.stringify(json));
             break;
         case 'keyUp':
             json.event = 'keyUp';
-            console.log(JSON.stringify(json).bgGreen.black);
+            console.log(Chalk.black.bgGreen(JSON.stringify(json)));
             _socket.send(JSON.stringify(json));
             break;
         case 'willAppear': 
             json.event = 'willAppear';
-            console.log(JSON.stringify(json).bgGreen.black);
+            console.log(Chalk.black.bgGreen(JSON.stringify(json)));
             _socket.send(JSON.stringify(json));
             break;
         case 'willDisappear':
             json.event = 'willDisappear';
-            console.log(JSON.stringify(json).bgGreen.black);
+            console.log(Chalk.black.bgGreen(JSON.stringify(json)));
             _socket.send(JSON.stringify(json));
             break;
         case 'deviceDidConnect':
@@ -117,7 +117,7 @@ process.on('message', (msg) => {
                     }
                 },
             };
-            console.log(JSON.stringify(ddcJson).bgGreen.black);
+            console.log(Chalk.black.bgGreen(JSON.stringify(ddcJson)));
             _socket.send(JSON.stringify(ddcJson));
             break;
         case 'deviceDidDisconnect':
@@ -125,11 +125,11 @@ process.on('message', (msg) => {
                 'event': 'deviceDidDisconnect',
                 'device': config.server.deviceId
             };
-            console.log(JSON.stringify(dddJson).bgGreen.black);
+            console.log(Chalk.black.bgGreen(JSON.stringify(dddJson)));
             _socket.send(JSON.stringify(dddJson));
             break;
         default:
-            console.log(`\nUnknown Index message: ${msg}`.red);
+            console.log(Chalk.red(`\nUnknown Index message: ${msg}`));
             break;
     }
 });
