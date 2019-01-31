@@ -12,6 +12,14 @@
   },
   "author": "",
   "license": "MIT",
+  "homepage": "https://github.com/FritzAndFriends/StreamDeckEmulator",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/FritzAndFriends/StreamDeckEmulator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/FritzAndFriends/StreamDeckEmulator/issues"
+  },
   "dependencies": {
     "chalk": "^2.4.2",
     "dotenv": "^6.2.0",
