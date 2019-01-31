@@ -4,11 +4,10 @@ const { spawnSync } = require('child_process')
 
 function handleRun(args) {
   console.log(Chalk.bold(`Running Emulator on ${args.executable} located in ${args.path}`));
-  
-  const emu = spawnSync('npm', ['start'], {
+
+  spawnSync('npm', ['start'], {
     stdio: 'inherit'
   });
-
 }
 
 module.exports = Cli.createCommand('run', {
