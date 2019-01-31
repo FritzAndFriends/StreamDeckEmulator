@@ -1,5 +1,5 @@
-var Chalk = require('chalk');
-var Cli = require('structured-cli');
+const Chalk = require('chalk');
+const Cli = require('structured-cli');
 
 module.exports = Cli.createCommand('run', {
   description: 'Starts the emulator',

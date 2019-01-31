@@ -1,4 +1,4 @@
-var Chalk = require('chalk');
+const Chalk = require('chalk');
 const config = require('./config');
 const { fork } = require('child_process');
 const rlSync = require('readline-sync');

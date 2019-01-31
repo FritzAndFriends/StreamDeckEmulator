@@ -1,4 +1,4 @@
-var Chalk = require('chalk');
+const Chalk = require('chalk');
 const config = require('./config');
 const path = require('path');
 let manifest = require(path.join(config.executable.path, config.executable.manifest));

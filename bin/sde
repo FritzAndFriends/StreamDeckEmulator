@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 
-var _ = require('lodash');
-var Chalk = require('chalk');
-var Cli = require('structured-cli');
-var Updates = require('update-notifier');
-var Package = require('../package.json');
+const _ = require('lodash');
+const Chalk = require('chalk');
+const Cli = require('structured-cli');
+const Updates = require('update-notifier');
+const Package = require('../package.json');
 
 // Check latest version on npm
 // and notify user if newer version
 // is available.
 Updates({ pkg: Package }).notify();
 
-var cli = Cli.createApp({
+const cli = Cli.createApp({
     description: Package.description,
     version: Package.version,
     epilog: Chalk.underline('Sample usage:') + '\n'
