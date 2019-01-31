@@ -26,7 +26,9 @@ sde -p /path/to/built/streamdeck/plugin -e nameofplugin
 
 ## Local Development
 
-### Getting Started
+### Runing local to the cloned repository
+
+#### Getting Started
 
 1. Clone the repository using git: `git clone https://github.com/FritzAndFriends/StreamDeckEmulator.git`.
 2. Change directory to the repository: `cd StreamDeckEmulator`.
@@ -37,11 +39,20 @@ sde -p /path/to/built/streamdeck/plugin -e nameofplugin
    2. Update the value of `WINEXE_NAME` or `OSXEXE_NAME` to be the filename of the your plugin's executable.
 
 
-### Starting and Stopping the Emulator
+#### Starting and Stopping the Emulator
 
 1. Open a command prompt/terminal/shell and navigate to the current directory.
 2. Start the emulator with the command `npm start`
 3. When you are done, press <kbd>Ctrl</kbd>+<kbd>C</kbd> to stop the emulator.
+
+### Running as a global tool
+
+1. Clone the repository using git: `git clone https://github.com/FritzAndFriends/StreamDeckEmulator.git`.
+2. Change directory to the repository: `cd StreamDeckEmulator`.
+3. Run `npm install`.
+4. Run `npm link`
+
+You should now have the CLI command `sde` installed globally as if it were installed via NPM.
 
 <!-- Reference Links -->
 
