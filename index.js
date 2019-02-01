@@ -52,7 +52,9 @@ function promptUser() {
     'wa' for willAppear
     'wd' for willDisappear
     'dc' for deviceDidConnect
-    'dd' for deviceDidDisconnect\n`);
+    'dd' for deviceDidDisconnect
+
+    To quit, press 'q'\n`);
 
     switch(cmd) {
         case 'kd':
@@ -72,11 +74,14 @@ function promptUser() {
             break;
         case 'dd':
             forked.send('deviceDidDisconnect');
+        case 'q':
+// Is this too much? Unnecessary? Over-achiever?
+            forked.disconnect();
+            forked.removeAllListeners();
+            forked.kill();
+            return;
         default:
             break;
     }
     promptUser();
 }
-
-
-
