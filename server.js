@@ -12,7 +12,7 @@ server.on('connection', (socket) => {
     _socket = socket;
     _socket.on('message',(msg)=> {
         var evt = JSON.parse(msg);
-        console.log(msg.bgCyan.black);
+        console.log(Chalk.black.bgCyan(msg));
         switch(evt.event) {
             case 'showOk':
                 console.log(Chalk.green('*******OK ICON IS SHOWN\n'));
@@ -27,7 +27,7 @@ server.on('connection', (socket) => {
                 console.log(Chalk.green(`********OPENING URL ${evt.payload.url}\n`));
                 break;
             case 'setTitle':
-                console.log(Chalk.green(`********TITLE SET: title: ${evt.payload.title} - Sending titleParametersDidChange event to plugin\n`.green));
+                console.log(Chalk.green(`********TITLE SET: title: ${evt.payload.title} - Sending titleParametersDidChange event to plugin\n`));
                 var json = {
                     'action': manifest.Actions[0].UUID, 
                     'event': 'titleParametersDidChange', 
