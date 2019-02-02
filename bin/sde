@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 
-const _ = require('lodash');
-const Chalk = require('chalk');
-const Cli = require('structured-cli');
-const Updates = require('update-notifier');
-const Package = require('../package.json');
+const path = require("path");
+const _ = require("lodash");
+const Chalk = require("chalk");
+const Cli = require("structured-cli");
+const Updates = require("update-notifier");
+const packagePath = path.resolve(__dirname, "../package.json");
+const Package = require(packagePath);
 
 // Check latest version on npm
 // and notify user if newer version
@@ -12,71 +14,73 @@ const Package = require('../package.json');
 Updates({ pkg: Package }).notify();
 
 const cli = Cli.createApp({
-    description: Package.description,
-    version: Package.version,
-    epilog: Chalk.underline('Sample usage:') + '\n'
+  description: Package.description,
+  version: Package.version,
+  epilog: Chalk.underline("Sample usage:") + "\n"
 });
 
-cli.addChild(require('./run'));
+cli.addChild(require("./run"));
 
 Cli.run(cli)
-    // Code: 1
-    .catch(_.matchesProperty('code', 'E_CANCELLED'), function (err) {
-        console.error(err.message);
+  // Code: 1
+  .catch(_.matchesProperty("code", "E_CANCELLED"), function(err) {
+    console.error(err.message);
 
-        process.exit(1);
-    })
-    // Code: 2
-    .catch(_.matchesProperty('code', 'E_INVALID'), function (err) {
-        console.error(err.parser.formatUsage());
-        console.error(Chalk.red(err.message));
+    process.exit(1);
+  })
+  // Code: 2
+  .catch(_.matchesProperty("code", "E_INVALID"), function(err) {
+    console.error(err.parser.formatUsage());
+    console.error(Chalk.red(err.message));
 
-        process.exit(2);
-    })
-    // Code: 3
-    .catch(_.matchesProperty('code', 'E_HINT'), function (err) {
-        console.error(err.message);
+    process.exit(2);
+  })
+  // Code: 3
+  .catch(_.matchesProperty("code", "E_HINT"), function(err) {
+    console.error(err.message);
 
-        process.exit(3);
-    })
-    // Code: 4
-    .catch(_.matchesProperty('code', 'E_TIMEOUT'), function (err) {
-        console.error(Chalk.red(err.message));
+    process.exit(3);
+  })
+  // Code: 4
+  .catch(_.matchesProperty("code", "E_TIMEOUT"), function(err) {
+    console.error(Chalk.red(err.message));
 
-        process.exit(4);
-    })
-    // Code: 5
-    .catch(_.matchesProperty('code', 'E_NOTFOUND'), function (err) {
-        console.error(Chalk.red(err.message));
+    process.exit(4);
+  })
+  // Code: 5
+  .catch(_.matchesProperty("code", "E_NOTFOUND"), function(err) {
+    console.error(Chalk.red(err.message));
 
-        process.exit(5);
-    })
-    // Code: 6
-    .catch(_.matchesProperty('code', 'E_BADREQUEST'), function (err) {
-        console.error(Chalk.red(err.message));
+    process.exit(5);
+  })
+  // Code: 6
+  .catch(_.matchesProperty("code", "E_BADREQUEST"), function(err) {
+    console.error(Chalk.red(err.message));
 
-        process.exit(6);
-    })
-    // Code: 7
-    .catch(_.matchesProperty('code', 'E_SERVERERROR'), function (err) {
-        console.error(Chalk.red(err.message));
+    process.exit(6);
+  })
+  // Code: 7
+  .catch(_.matchesProperty("code", "E_SERVERERROR"), function(err) {
+    console.error(Chalk.red(err.message));
 
-        process.exit(7);
-    })
-    // Code: 8
-    .catch(_.matchesProperty('code', 'E_NOTAUTHORIZED'), function (err) {
-        console.error(Chalk.red(err.message));
+    process.exit(7);
+  })
+  // Code: 8
+  .catch(_.matchesProperty("code", "E_NOTAUTHORIZED"), function(err) {
+    console.error(Chalk.red(err.message));
 
-        process.exit(8);
-    })
-    // Code: 99
-    .catch(function (err) {
-        console.error(Chalk.red('Uncaught error: ', err.message));
-        console.error(err.stack);
-        console.error('Please report this at: https://github.com/FritzAndFriends/StreamDeckEmulator/issues');
+    process.exit(8);
+  })
+  // Code: 99
+  .catch(function(err) {
+    console.error(Chalk.red("Uncaught error: ", err.message));
+    console.error(err.stack);
+    console.error(
+      "Please report this at: https://github.com/FritzAndFriends/StreamDeckEmulator/issues"
+    );
 
-        process.exit(99);
-    })
-    .then(function () {
-        process.exit(0);
-    });
+    process.exit(99);
+  })
+  .then(function() {
+    process.exit(0);
+  });
