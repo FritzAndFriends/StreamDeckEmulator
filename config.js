@@ -1,6 +1,5 @@
 const dotenv = require("dotenv");
 const envConfig = dotenv.config();
-require('colors');
 
 if (envConfig.error){
     const errorMessage = '>>>  The environment ("./.env") file could not be loaded. Check that it exists and that it is valid. <<<';
