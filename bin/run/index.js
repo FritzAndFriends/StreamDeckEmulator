@@ -5,11 +5,10 @@ const { spawnSync } = require('child_process')
 
 function handleRun(args) {
   console.log(Chalk.bold(`Running Emulator on ${args.executable} located in ${args.path}`));
-  const cwd = path.resolve(__dirname, '../../');
 
   spawnSync('npm', ['start'], {
     stdio: 'inherit',
-    cwd: cwd,
+    cwd: path.resolve(__dirname, '../../');,
     env: Object.assign(process.env, {
       'BUILD_PATH': args.path,
       'WINEXE_NAME': args.executable,
