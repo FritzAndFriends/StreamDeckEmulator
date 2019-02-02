@@ -1,12 +1,11 @@
 const path = require("path");
 const Chalk = require('chalk');
 const Cli = require('structured-cli');
-const { spawnSync } = require('child_process')
+const { spawn } = require('cross-spawn');
 
 function handleRun(args) {
   console.log(Chalk.bold(`Running Emulator on ${args.executable} located in ${args.path}`));
-
-  spawnSync('npm', ['start'], {
+  spawn.sync('npm', ['start'], {
     stdio: 'inherit',
     cwd: path.resolve(__dirname, '../../'),
     env: Object.assign(process.env, {
