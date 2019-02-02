@@ -2,7 +2,7 @@ const Chalk = require('chalk');
 const config = require('./config');
 const { fork } = require('child_process');
 const rlSync = require('readline-sync');
-const exec = require('child_process').execFile;
+const { spawn } = require('cross-spawn');
 const path = require('path');
 const os = require('os');
 let manifest = require(path.join(config.executable.path, config.executable.manifest));
@@ -33,7 +33,7 @@ let info = {
   };
 
 let registrationParams = ['-port', config.server.port, '-pluginUUID', manifest.Actions[0].UUID,'-registerEvent','registerEvent','-info', JSON.stringify(info)];
-exec(pluginExe, registrationParams, { cwd: config.executable.path }, (err, data) => {
+spawn(pluginExe, registrationParams, { cwd: config.executable.path }, (err, data) => {
     if(err){
         console.log(Chalk.red(`ERROR: ${err}`));
     } else {
@@ -41,7 +41,6 @@ exec(pluginExe, registrationParams, { cwd: config.executable.path }, (err, data)
     }
 } );
 
-// Type b at any time to send a KeyUp event to the plugin
 promptUser();
 
 function promptUser() {
