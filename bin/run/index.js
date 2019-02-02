@@ -8,7 +8,7 @@ function handleRun(args) {
 
   spawnSync('npm', ['start'], {
     stdio: 'inherit',
-    cwd: path.resolve(__dirname, '../../');,
+    cwd: path.resolve(__dirname, '../../'),
     env: Object.assign(process.env, {
       'BUILD_PATH': args.path,
       'WINEXE_NAME': args.executable,
