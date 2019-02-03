@@ -15,7 +15,8 @@ In order to be able to run this emulator, you will need to have [Node.js][] inst
 4. Create a copy of the .env_sample file: `cp .env_sample .env`.
 5. Update `.env` file to set your environment specific values.
    1. Update the value of `BUILD_PATH` to be the build output path of your plugin's executable.
-   2. Update the value of `WINEXE_NAME` or `OSXEXE_NAME` to be the filename of the your plugin's executable.
+   *Note*: Make sure you use the correct path syntax for your operating system.
+   2. Update the value of `WINEXE_NAME` (if you're on Windows) or `OSXEXE_NAME` (if you're on macOS) to be the filename of the your plugin's executable.
 6. Run `npm start` to launch the emulator.
 
 
