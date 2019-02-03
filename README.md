@@ -48,6 +48,9 @@ At this time, the following are the events supported by the emulator, and their 
 **Issue**: If, for any reason, when sending a command to the plugin, the websocket connection is closed or otherwise broken, no further messages can be sent.
 **Workaround**: Quit the emulator (using the <kbd>q</kbd> command) and restart it.
 
+**Issue**: If the emulator is force quite (using <kbd>Ctrl</kbd>+<kbd>C</kbd>), the WebSocket connection *may* not be closed, and the configured port *could* remain in use.
+**Workaround**: Find if there is an instance of `node` running for the `index.js` script, and end it. This varies per operating system.
+
 
 <!-- Reference Links -->
 
