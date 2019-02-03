@@ -1,17 +1,23 @@
+const Chalk = require('chalk');
 const config = require('./config');
 const { fork } = require('child_process');
-const colors = require('colors');
 const rlSync = require('readline-sync');
-const exec = require('child_process').execFile;
+const { spawn } = require('cross-spawn');
 const path = require('path');
 const os = require('os');
 let manifest = require(path.join(config.executable.path, config.executable.manifest));
-const pluginExe = os.platform == 'win32' ? config.executable.winexe : config.executable.osxexe;
+const pluginExe = os.platform == 'win32' ? config.executable.winexe : `./${config.executable.osxexe}`;
 
 const forked = fork('server.js');
-console.log('<status>Web Socket Server Started....'.green);
+console.log(Chalk.green('<status>Web Socket Server Started....'));
 
-console.log('Green Text denotes hardware action\nGreen Highlight denotes hardware messages sent\nCyan highlight denotes messages received from plugin\n');
+
+
+console.log([
+    'Green Text denotes hardware action',
+    'Green Highlight denotes hardware messages sent',
+    'Cyan highlight denotes messages received from plugin'
+].join('\n'));
 
 // Registration Stuff
 let info = {
@@ -32,16 +38,25 @@ let info = {
     ]
   };
 
-let registrationParams = ['-port', config.server.port, '-pluginUUID', manifest.Actions[0].UUID,'-registerEvent','registerEvent','-info', JSON.stringify(info)];
-exec(pluginExe, registrationParams, { cwd: config.executable.path }, (err, data) => {
-    if(err){
-        console.log(`ERROR: ${err}`.red);
-    } else {
-        console.log(`DATA: ${data}`.green);
-    }
-} );
+let registrationParams = [
+    '-port', config.server.port, 
+    '-pluginUUID', manifest.Actions[0].UUID,
+    '-registerEvent','registerEvent',
+    '-info', JSON.stringify(info)
+];
 
-// Type b at any time to send a KeyUp event to the plugin
+console.log(`spawning ${pluginExe} in ${config.executable.path}`);
+const plugin = spawn(pluginExe, registrationParams, { cwd: config.executable.path, stdio: 'inherit' });
+console.log(`${pluginExe} has a PID of ${plugin.pid}`);
+
+plugin.on('error', () => {
+    console.log(arguments);
+});
+
+plugin.on('exit', () => {
+    console.log(arguments);
+});
+
 promptUser();
 
 function promptUser() {

@@ -3,11 +3,32 @@
 A simple emulator for the Stream Deck Application to allow plugin developers to develop, test, and debug their plugins without requiring a physical [Stream Deck][] device.
 
 
-### Pre-requisites
+## Pre-requisites
 
 In order to be able to run this emulator, you will need to have [Node.js][] installed. The most recent <abbr title="Long Term Service">LTS</abbr> is suggested.
 
-### Getting Started
+## Setup
+
+```bash
+npm i -g streamdeckemulator
+```
+
+## Usage
+
+### Run the Emulator on a Specific Plugin
+
+```bash
+sde -p /path/to/built/streamdeck/plugin -e nameofplugin
+```
+
+### Using the Emulator
+
+
+## Local Development
+
+### Runing local to the cloned repository
+
+#### Getting Started
 
 1. Clone the repository using git: `git clone https://github.com/FritzAndFriends/StreamDeckEmulator.git`.
 2. Change directory to the repository: `cd StreamDeckEmulator`.
@@ -20,12 +41,18 @@ In order to be able to run this emulator, you will need to have [Node.js][] inst
 6. Run `npm start` to launch the emulator.
 
 
-### Starting and Stopping the Emulator
+#### Starting and Stopping the Emulator
 
 1. Open a command prompt/terminal/shell and navigate to the current directory.
 2. Start the emulator with the command `npm start`
 3. When you are done, use the `q` option to shut down the emulator.
 
+### Running as a global tool
+
+1. Clone the repository using git: `git clone https://github.com/FritzAndFriends/StreamDeckEmulator.git`.
+2. Change directory to the repository: `cd StreamDeckEmulator`.
+3. Run `npm install`.
+4. Run `npm link`
 
 ### Using the Emulator
 
@@ -51,6 +78,7 @@ At this time, the following are the events supported by the emulator, and their 
 **Issue**: If the emulator is force quit (using <kbd>Ctrl</kbd>+<kbd>C</kbd>), the WebSocket connection *may* not be closed, and the configured port *could* remain in use.  
 **Workaround**: Find if there is an instance of `node` running for the `index.js` script, and end it. This varies per operating system.  
 
+You should now have the CLI command `sde` installed globally as if it were installed via NPM.
 
 <!-- Reference Links -->
 
