@@ -11,8 +11,6 @@ const pluginExe = os.platform == 'win32' ? config.executable.winexe : `./${confi
 const forked = fork('server.js');
 console.log(Chalk.green('<status>Web Socket Server Started....'));
 
-
-
 console.log([
     'Green Text denotes hardware action',
     'Green Highlight denotes hardware messages sent',
@@ -42,7 +40,8 @@ let registrationParams = [
     '-port', config.server.port, 
     '-pluginUUID', manifest.Actions[0].UUID,
     '-registerEvent','registerEvent',
-    '-info', JSON.stringify(info)
+    '-info', JSON.stringify(info),
+    '-break'
 ];
 
 console.log(`spawning ${pluginExe} in ${config.executable.path}`);

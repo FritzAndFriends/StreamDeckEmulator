@@ -7,6 +7,7 @@ const WebSocket = require('ws');
 const server = new WebSocket.Server({ port: config.server.port});
 let _socket; 
 let _settings = {};
+let _globalSettings = {};
 
 server.on('connection', (socket) => {
     _socket = socket;
@@ -58,6 +59,65 @@ server.on('connection', (socket) => {
             case 'setSettings':
                 console.log(Chalk.green(`********SETTINGS STORED: ${JSON.stringify(evt.payload)} *******\n`));
                 _settings = evt.payload;
+                var json = {
+                    'action': manifest.Actions[0].UUID, 
+                    'event': 'didReceiveSettings', 
+                    'context': '', 
+                    'device': config.server.deviceId, 
+                    'payload': {
+                      'settings': _settings,
+                      'coordinates': {
+                        'column': 3, 
+                        'row': 1
+                      }, 
+                    'isInMultiAction': false
+                    }
+                };
+                console.log(Chalk.black.bgGreen(JSON.stringify(json)));
+                _socket.send(JSON.stringify(json));
+                break;
+
+            case 'getGlobalSettings':
+                var json = {
+                    'event': 'didReceiveGlobalSettings', 
+                    'payload': {
+                      'settings': _globalSettings
+                    }
+                };
+                console.log(Chalk.black.bgGreen(JSON.stringify(json)));
+                _socket.send(JSON.stringify(json));
+                break;
+
+            case 'getSettings':
+                var json = {
+                    'action': manifest.Actions[0].UUID, 
+                    'event': 'didReceiveSettings', 
+                    'context': '', 
+                    'device': config.server.deviceId, 
+                    'payload': {
+                      'settings': _settings,
+                      'coordinates': {
+                        'column': 3, 
+                        'row': 1
+                      }, 
+                    'isInMultiAction': false
+                    }
+                };
+                console.log(Chalk.black.bgGreen(JSON.stringify(json)));
+                _socket.send(JSON.stringify(json));
+                break;
+
+            case 'setGlobalSettings':
+                console.log(Chalk.green(`********GLOBAL SETTINGS STORED: ${JSON.stringify(evt.payload)} *******\n`));
+                _globalSettings = evt.payload;
+                var json = {
+                    'event': 'didReceiveGlobalSettings', 
+                    'payload': {
+                      'settings': _globalSettings
+                    }
+                };
+                console.log(Chalk.black.bgGreen(JSON.stringify(json)));
+                _socket.send(JSON.stringify(json));
                 break;
             default: 
                 console.log(Chalk.red(`********UNKNOWN MESSAGE ${msg}\n`));
