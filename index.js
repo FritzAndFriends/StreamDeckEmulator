@@ -67,6 +67,11 @@ function promptUser() {
     'wd' for willDisappear
     'dc' for deviceDidConnect
     'dd' for deviceDidDisconnect
+    'al' for applicationDidLaunch
+    'at' for applicationDidTerminate
+    'pa' for propertyInspectorDidAppear
+    'pd' for propertyInspectorDidDisappear
+    'sp' for sendToPlugin
 
     To quit, press 'q'\n`);
 
@@ -88,12 +93,28 @@ function promptUser() {
             break;
         case 'dd':
             forked.send('deviceDidDisconnect');
+            break;
         case 'q':
 // Is this too much? Unnecessary? Over-achiever?
             forked.disconnect();
             forked.removeAllListeners();
             forked.kill();
             return;
+        case 'al':
+            forked.send('applicationDidLaunch');
+            break;
+        case 'at':
+            forked.send('applicationDidTerminate');
+            break;
+        case 'pa':
+            forked.send('propertyInspectorDidAppear');
+            break;
+        case 'pd':
+            forked.send('propertyInspectorDidDisappear');
+            break;
+        case 'sp':
+            forked.send('sendToPlugin');
+            break;
         default:
             break;
     }
