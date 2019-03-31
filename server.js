@@ -7,6 +7,7 @@ const WebSocket = require('ws');
 const server = new WebSocket.Server({ port: config.server.port});
 let _socket; 
 let _settings = {};
+let _globalSettings = {};
 
 server.on('connection', (socket) => {
     _socket = socket;
@@ -58,6 +59,77 @@ server.on('connection', (socket) => {
             case 'setSettings':
                 console.log(Chalk.green(`********SETTINGS STORED: ${JSON.stringify(evt.payload)} *******\n`));
                 _settings = evt.payload;
+                var json = {
+                    'action': manifest.Actions[0].UUID, 
+                    'event': 'didReceiveSettings', 
+                    'context': '', 
+                    'device': config.server.deviceId, 
+                    'payload': {
+                      'settings': _settings,
+                      'coordinates': {
+                        'column': 3, 
+                        'row': 1
+                      }, 
+                    'isInMultiAction': false
+                    }
+                };
+                console.log(Chalk.black.bgGreen(JSON.stringify(json)));
+                _socket.send(JSON.stringify(json));
+                break;
+
+            case 'getGlobalSettings':
+                var json = {
+                    'event': 'didReceiveGlobalSettings', 
+                    'payload': {
+                      'settings': _globalSettings
+                    }
+                };
+                console.log(Chalk.black.bgGreen(JSON.stringify(json)));
+                _socket.send(JSON.stringify(json));
+                break;
+
+            case 'getSettings':
+                var json = {
+                    'action': manifest.Actions[0].UUID, 
+                    'event': 'didReceiveSettings', 
+                    'context': '', 
+                    'device': config.server.deviceId, 
+                    'payload': {
+                      'settings': _settings,
+                      'coordinates': {
+                        'column': 3, 
+                        'row': 1
+                      }, 
+                    'isInMultiAction': false
+                    }
+                };
+                console.log(Chalk.black.bgGreen(JSON.stringify(json)));
+                _socket.send(JSON.stringify(json));
+                break;
+
+            case 'setGlobalSettings':
+                console.log(Chalk.green(`********GLOBAL SETTINGS STORED: ${JSON.stringify(evt.payload)} *******\n`));
+                _globalSettings = evt.payload;
+                var json = {
+                    'event': 'didReceiveGlobalSettings', 
+                    'payload': {
+                      'settings': _globalSettings
+                    }
+                };
+                console.log(Chalk.black.bgGreen(JSON.stringify(json)));
+                _socket.send(JSON.stringify(json));
+                break;
+            case 'setImage':
+                console.log(Chalk.green(`********SET IMAGE RECEIVED: ${evt.payload.target} *******\n`));
+                break;
+            case 'setState':
+                console.log(Chalk.green(`********SET STATE RECEIVED: ${JSON.stringify(evt.payload)} *******\n`));
+                break;
+            case 'switchToProfile':
+                console.log(Chalk.green(`********SWITCH TO PROFILE RECEIVED: ${JSON.stringify(evt.payload)} *******\n`));
+                break;
+            case 'logMessage':
+                console.log(Chalk.green(`********LOG MESSAGE RECEIVED: ${JSON.stringify(evt.payload)} *******\n`));
                 break;
             default: 
                 console.log(Chalk.red(`********UNKNOWN MESSAGE ${msg}\n`));
@@ -127,6 +199,42 @@ process.on('message', (msg) => {
             };
             console.log(Chalk.black.bgGreen(JSON.stringify(dddJson)));
             _socket.send(JSON.stringify(dddJson));
+            break;
+        case 'applicationDidLaunch':
+            var adlJson = {
+                "event": "applicationDidLaunch",
+                "payload" : {
+                    "application": "com.apple.mail"
+                }
+            };
+            console.log(Chalk.black.bgGreen(JSON.stringify(adlJson)));
+            _socket.send(JSON.stringify(adlJson));
+            break;
+        case 'applicationDidTerminate':
+            var adtJson = {
+                "event": "applicationDidTerminate",
+                "payload" : {
+                    "application": "com.apple.mail"
+                }
+            };
+            console.log(Chalk.black.bgGreen(JSON.stringify(adtJson)));
+            _socket.send(JSON.stringify(adtJson));
+            break;
+        case 'propertyInspectorDidAppear':
+            json.event =  "propertyInspectorDidAppear";
+            console.log(Chalk.black.bgGreen(JSON.stringify(json)));
+            _socket.send(JSON.stringify(json));
+            break;
+        case 'propertyInspectorDidDisappear':
+            json.event =  "propertyInspectorDidDisappear";
+            console.log(Chalk.black.bgGreen(JSON.stringify(json)));
+            _socket.send(JSON.stringify(json));
+            break;
+        case 'sendToPlugin':
+            json.event = "sendToPlugin";
+            json.payload.settings.message = "It can be anything you want";
+            console.log(Chalk.black.bgGreen(JSON.stringify(json)));
+            _socket.send(JSON.stringify(json));
             break;
         default:
             console.log(Chalk.red(`\nUnknown Index message: ${msg}`));
