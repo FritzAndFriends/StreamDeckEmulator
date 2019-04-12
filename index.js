@@ -36,9 +36,11 @@ let info = {
     ]
   };
 
+let actionIndex = selectAction();
+forked.send({event:'registerActionIndex', arguments: actionIndex});
 let registrationParams = [
     '-port', config.server.port, 
-    '-pluginUUID', manifest.Actions[0].UUID,
+    '-pluginUUID', manifest.Actions[actionIndex].UUID,
     '-registerEvent','registerEvent',
     '-info', JSON.stringify(info),
     '-break'
@@ -59,6 +61,7 @@ plugin.on('exit', () => {
 promptUser();
 
 function promptUser() {
+    var msg = {event:'', arguments: null};
     var cmd = rlSync.question(`
     Enter: 
     'kd' for keyDown 
@@ -77,22 +80,28 @@ function promptUser() {
 
     switch(cmd) {
         case 'kd':
-            forked.send('keyDown');
+            msg.event = 'keyDown';
+            forked.send(msg);
             break;
         case 'ku':
-            forked.send('keyUp');
+            msg.event = 'keyUp';
+            forked.send(msg);
             break;
         case 'wa':
-            forked.send('willAppear');
+            msg.event = 'willAppear';
+            forked.send(msg);
             break;
         case 'wd':
-            forked.send('willDisappear');
+            msg.event = 'willDisappear';
+            forked.send(msg);
             break;
         case 'dc':
-            forked.send('deviceDidConnect');
+            msg.event = 'deviceDidConnect';
+            forked.send(msg);
             break;
         case 'dd':
-            forked.send('deviceDidDisconnect');
+            msg.event = 'deviceDidDisconnect';
+            forked.send(msg);
             break;
         case 'q':
 // Is this too much? Unnecessary? Over-achiever?
@@ -101,22 +110,38 @@ function promptUser() {
             forked.kill();
             return;
         case 'al':
-            forked.send('applicationDidLaunch');
+            msg.event = 'applicationDidLaunch';
+            forked.send(msg);
             break;
         case 'at':
-            forked.send('applicationDidTerminate');
+            msg.event = 'applicationDidTerminate';
+            forked.send(msg);
             break;
         case 'pa':
-            forked.send('propertyInspectorDidAppear');
+            msg.event = 'propertyInspectorDidAppear';
+            forked.send(msg);
             break;
         case 'pd':
-            forked.send('propertyInspectorDidDisappear');
+            msg.event = 'propertyInspectorDidDisappear';
+            forked.send(msg);
             break;
         case 'sp':
-            forked.send('sendToPlugin');
+            msg.event = 'sendToPlugin';
+            forked.send(msg);
             break;
         default:
             break;
     }
     promptUser();
 }
+
+function selectAction() {
+
+    var menu = 'Enter: \n';
+    manifest.Actions.forEach((act, idx)=> {
+        menu += `'${idx}' for UUID: ${act.UUID} \n`;
+    });
+
+    return rlSync.question(menu);   
+}
+
