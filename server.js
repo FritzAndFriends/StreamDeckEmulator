@@ -2,6 +2,7 @@ const Chalk = require('chalk');
 const config = require('./config');
 const path = require('path');
 let manifest = require(path.join(config.executable.path, config.executable.manifest));
+let actionIndex = 0;
 
 const WebSocket = require('ws');
 const server = new WebSocket.Server({ port: config.server.port});
@@ -141,7 +142,7 @@ server.on('connection', (socket) => {
 // Message from index.js
 process.on('message', (msg) => {
     var json = {
-        'action': manifest.Actions[0].UUID,
+        'action': manifest.Actions[actionIndex].UUID,
         'event': '',
         'context': '',
         'device': config.server.deviceId,
@@ -156,7 +157,14 @@ process.on('message', (msg) => {
             'isInMultiAction': false
         }
     };
-    switch(msg) {
+   
+    switch(msg.event) {
+        case 'registerActionIndex':
+            actionIndex = msg.arguments;
+            break;
+        case 'registerActionIndex':
+            console.log(obj);
+            break;
         case 'keyDown':
             json.event = 'keyDown';
             console.log(Chalk.black.bgGreen(JSON.stringify(json)));
@@ -181,9 +189,9 @@ process.on('message', (msg) => {
             let ddcJson = {
                 'event': 'deviceDidConnect',
                 'device': config.server.deviceId,
-                 'deviceInfo': {
+                    'deviceInfo': {
                     'type': 0,
-                     'size': {
+                        'size': {
                         'columns': 5,
                         'rows': 3
                     }
@@ -240,4 +248,6 @@ process.on('message', (msg) => {
             console.log(Chalk.red(`\nUnknown Index message: ${msg}`));
             break;
     }
+    
+   
 });
