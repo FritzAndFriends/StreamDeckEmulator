@@ -21,7 +21,7 @@
     "chalk": "^2.4.2",
     "cross-spawn": "^6.0.5",
     "dotenv": "^6.2.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "readline-sync": "^1.4.9",
     "structured-cli": "^1.0.5",
     "update-notifier": "^2.5.0",
