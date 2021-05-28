@@ -25,6 +25,6 @@
     "readline-sync": "^1.4.9",
     "structured-cli": "^1.0.5",
     "update-notifier": "^2.5.0",
-    "ws": "^6.1.2"
+    "ws": "^7.4.5"
   }
 }
